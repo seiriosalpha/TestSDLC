@@ -11,7 +11,6 @@ jobs:
       # This action checks-out your repository under $GITHUB_WORKSPACE, so your workflow can access it.
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 0
       # Gitleaks version from https://github.com/sushi2k/gitleaks-action that allows to store the output as SARIF file
       - name: Gitleaks
         uses: gitleaks/gitleaks-action@v2.1.2
@@ -25,7 +24,7 @@ jobs:
         if: always()
         with:
           name: gitleaks
-          path: gitleaks.sarif
+          path: ${{github.workspace}}/gitleaks.sarif
       # Upload the SARIF file to Github, so the findings show up in "Security / Code Scanning alerts"
       - name: Upload gitleaks report
         if: always()
