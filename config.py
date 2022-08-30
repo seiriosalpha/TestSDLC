@@ -7,4 +7,4 @@
 # key_pass: zaCELgL0imfnc8mVLWwsAawjYr4Rx-Af50DDqtlx
 
 # master_sign_pubkey: True
-# signing_key_pass: 
+# signing_key_pass: password123
