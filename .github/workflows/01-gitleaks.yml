@@ -16,7 +16,7 @@ jobs:
       - name: customized gitleaks
         uses: gitleaks/gitleaks-action@v2.1.2
         with:
-          extra-args: -o gitleaks.sarif -f sarif
+          report_format: 'sarif'
       # Testing if the SARIF file was created, by listing the workspace
       - name: List files in the workspace
         if: always()
@@ -33,4 +33,4 @@ jobs:
         if: always()
         uses: github/codeql-action/upload-sarif@v2
         with:
-          sarif_file: ${{github.workspace}}/reports/gitleaks.sarif
+          sarif_file: ${{ steps.gitleaks.outputs.report }}
