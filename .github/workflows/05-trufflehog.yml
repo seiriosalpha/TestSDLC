@@ -1,14 +1,18 @@
-name: A workflow for ensuring credentials are not in file
-on: push
+name: Leaked Secrets Scan
+on: [pull_request]
 jobs:
-  build:
-    name: Cred Checker
+  TruffleHog:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Haydn trufflehog-actions-scan
-        uses: haydz/trufflehog-actions-scan@master
+      - name: Checkout code
+        uses: actions/checkout@v3
         with:
-          branch: ${{ github.head_ref }}
-          scanArguments: '--regex --max_depth=10  --rules /regexes.json'
+          fetch-depth: 0
+      - name: TruffleHog OSS
+        uses: trufflesecurity/trufflehog@v3.4.3
+        with:
+          path: ./
+          base: ${{ github.event.repository.default_branch }}
+          head: HEAD
+          extra_args: --debug
           #test runs
