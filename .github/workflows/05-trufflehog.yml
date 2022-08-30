@@ -1,0 +1,20 @@
+# Documentation for Workflow Syntax: https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions
+# The name of the GitHub event that triggers the workflow.
+name: Gitleaks
+
+on: [push, pull_request]
+
+jobs:
+  gitleaks:
+    runs-on: ubuntu-latest
+    steps:
+      # This action checks-out your repository under $GITHUB_WORKSPACE, so your workflow can access it.
+      - uses: actions/checkout@v3
+      # Gitleaks version from https://github.com/sushi2k/gitleaks-action that allows to store the output as SARIF file
+      - name: TruffleHog OSS
+        uses: trufflesecurity/trufflehog@v3.9.0
+        with:
+          path: ./
+          base: ${{ github.event.repository.default_branch }}
+          head: HEAD
+          extra-args: --debug
